@@ -1,99 +1,145 @@
-/* Basic Styles for Recipe Finder */
-html, body {
-    font-family: Arial, sans-serif;
+/* Reset default margin and padding */
+* {
     margin: 0;
     padding: 0;
-    height: 100%;
-    background-color: #f9f9f9;
+    box-sizing: border-box;
+}
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-h1, h2 {
-    text-align: center;
-    color: #333;
+    min-height: 100vh; /* Ensure the body takes at least the full viewport height */
 }
 
 #content {
-    width: 90%;
-    max-width: 600px;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    min-height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    margin: 1rem; /* Add margin to prevent the container from touching the edges */
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 1.5rem;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
-    gap: 10px;
+    gap: 1rem;
 }
 
-input[type="text"], input[type="email"], input[type="password"] {
-    padding: 10px;
-    border-radius: 5px;
+label {
+    font-weight: bold;
+    color: #555;
+    text-align: left;
+}
+
+input {
+    padding: 0.75rem;
     border: 1px solid #ccc;
-    font-size: 16px;
-    width: 100%;
+    border-radius: 4px;
+    font-size: 1rem;
 }
 
 button {
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
+    padding: 0.75rem;
+    background-color: #007bff;
+    color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
+    font-size: 1rem;
     cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s;
-    width: 100%;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
 }
 
-ul {
+a {
+    color: #007bff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+p {
+    margin-top: 1rem;
+    color: #666;
+}
+
+/* Dashboard styles */
+#recipeSearchForm {
+    margin-bottom: 2rem;
+}
+
+#recipeList, #savedRecipesList {
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
-.recipe-item {
-    background-color: #fff;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+#recipeList li, #savedRecipesList li {
+    background-color: #f9f9f9;
+    padding: 1rem;
     border: 1px solid #ddd;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-button.save {
-    background-color: #ff9800;
+#recipeList h3, #savedRecipesList h3 {
+    margin: 0;
+    color: #333;
 }
 
-button.save:hover {
-    background-color: #e68900;
+#recipeList button, #savedRecipesList button {
+    background-color: #28a745;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
 }
 
-button.delete {
-    background-color: #f44336;
+#recipeList button:hover, #savedRecipesList button:hover {
+    background-color: #218838;
 }
 
-button.delete:hover {
-    background-color: #d32f2f;
+/* Logout button */
+button[onclick="logout()"] {
+    background-color: #dc3545;
+    margin-bottom: 1rem;
 }
 
-button.logout {
-    background-color: #007bff;
-    margin-top: 10px;
+button[onclick="logout()"]:hover {
+    background-color: #c82333;
 }
 
-button.logout:hover {
-    background-color: #0056b3;
+/* Responsive design */
+@media (max-width: 480px) {
+    #content {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    input, button {
+        font-size: 0.875rem;
+    }
 }
