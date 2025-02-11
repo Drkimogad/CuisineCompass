@@ -1,9 +1,13 @@
 /* Basic Styles for Recipe Finder */
-body {
+html, body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    height: 100%;
     background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 h1, h2 {
@@ -12,21 +16,31 @@ h1, h2 {
 }
 
 #content {
-    width: 80%;
-    margin: auto;
+    width: 90%;
+    max-width: 600px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 form {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
+    gap: 10px;
 }
 
-input[type="text"] {
+input[type="text"], input[type="email"], input[type="password"] {
     padding: 10px;
-    margin-bottom: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
+    font-size: 16px;
+    width: 100%;
 }
 
 button {
@@ -36,6 +50,9 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+    width: 100%;
 }
 
 button:hover {
@@ -49,17 +66,27 @@ ul {
 
 .recipe-item {
     background-color: #fff;
-    padding: 10px;
+    padding: 15px;
     margin-bottom: 10px;
     border-radius: 5px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 button.save {
     background-color: #ff9800;
 }
 
+button.save:hover {
+    background-color: #e68900;
+}
+
 button.delete {
     background-color: #f44336;
+}
+
+button.delete:hover {
+    background-color: #d32f2f;
 }
 
 button.logout {
