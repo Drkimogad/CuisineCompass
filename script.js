@@ -1,4 +1,4 @@
-let currentUser = null; // For keeping track of logged-in user
+let currentUser = null;
 
 // Helper functions for login state
 function isLoggedIn() {
@@ -9,10 +9,13 @@ function getLoggedInUser() {
     return JSON.parse(localStorage.getItem('currentUser'));
 }
 
-// Render Sign-In page
+// Render dynamic content
+function render(content) {
+    document.getElementById('content').innerHTML = content;
+}
+
 function showSignIn() {
-    const content = document.getElementById('content');
-    content.innerHTML = `
+    render(`
         <h1>Sign In</h1>
         <form id="signInForm">
             <label for="email">Email:</label>
@@ -22,8 +25,8 @@ function showSignIn() {
             <button type="submit">Sign In</button>
         </form>
         <p>Don't have an account? <a href="#" onclick="showSignUp()">Sign Up</a></p>
-    `;
-
+    `);
+    
     document.getElementById('signInForm').addEventListener('submit', function(event) {
         event.preventDefault();
         const email = document.getElementById('email').value;
@@ -41,10 +44,8 @@ function showSignIn() {
     });
 }
 
-// Render Sign-Up page
 function showSignUp() {
-    const content = document.getElementById('content');
-    content.innerHTML = `
+    render(`
         <h1>Sign Up</h1>
         <form id="signUpForm">
             <label for="newEmail">Email:</label>
@@ -54,8 +55,8 @@ function showSignUp() {
             <button type="submit">Sign Up</button>
         </form>
         <p>Already have an account? <a href="#" onclick="showSignIn()">Sign In</a></p>
-    `;
-
+    `);
+    
     document.getElementById('signUpForm').addEventListener('submit', function(event) {
         event.preventDefault();
         const newEmail = document.getElementById('newEmail').value;
@@ -67,14 +68,12 @@ function showSignUp() {
         } else {
             users.push({ email: newEmail, password: newPassword });
             localStorage.setItem('users', JSON.stringify(users));
-            localStorage.setItem('loggedIn', 'true');
             localStorage.setItem('currentUser', JSON.stringify({ email: newEmail }));
             showSignIn();
         }
     });
 }
 
-// Render the Dashboard (Recipe Finder)
 function showDashboard() {
     if (!isLoggedIn()) {
         showSignIn();
@@ -82,9 +81,9 @@ function showDashboard() {
     }
 
     currentUser = getLoggedInUser();
-    const content = document.getElementById('content');
-    content.innerHTML = `
+    render(`
         <h1>Recipe Finder</h1>
+        <button onclick="logout()">Sign Out</button>
         <form id="recipeSearchForm">
             <label for="ingredients">Enter ingredients:</label>
             <input type="text" id="ingredients" required>
@@ -92,90 +91,96 @@ function showDashboard() {
         </form>
         <h2>Recipes</h2>
         <ul id="recipeList"></ul>
-    `;
+        <h2>Saved Recipes</h2>
+        <ul id="savedRecipesList"></ul>
+    `);
 
     document.getElementById('recipeSearchForm').addEventListener('submit', function(event) {
         event.preventDefault();
         const ingredients = document.getElementById('ingredients').value;
         fetchRecipes(ingredients);
     });
+
+    loadSavedRecipes();
 }
 
-// Fetch r3cipe function 
 function fetchRecipes(ingredients) {
     const userAgent = 'RecipeFinderApp - Version 1.0 - www.yourappwebsite.com'; // Replace with your app details
     const url = `https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=ingredients&tag_contains_0=contains&tag_0=${ingredients}&json=true`;
-
-    fetch(url, {
-        headers: {
-            'User-Agent': userAgent
-        }
-    })
+    fetch(url)
     .then(response => response.json())
     .then(data => {
-        displayRecipes(data.products);
+        displayRecipes(data);
     })
-    .catch(error => {
+    .catch(() => {
         alert('Error fetching recipes');
     });
 }
 
-function displayRecipes(products) {
-    const recipeList = document.getElementById('recipeList');
-    recipeList.innerHTML = '';
-
-    if (products.length === 0) {
-        recipeList.innerHTML = '<li>No recipes found for the given ingredients.</li>';
-        return;
-    }
-
-    products.forEach(product => {
-        const li = document.createElement('li');
-        li.classList.add('recipe-item');
-        li.innerHTML = `
-            <h3>${product.product_name}</h3>
-            <p><strong>Ingredients:</strong> ${product.ingredients_text}</p>
-            <button class="save" onclick="saveRecipe(${product.code})">Save</button>
-        `;
-        recipeList.appendChild(li);
-    });
-}
-
-// Display the fetched recipes
 function displayRecipes(recipes) {
     const recipeList = document.getElementById('recipeList');
     recipeList.innerHTML = '';
 
     if (recipes.length === 0) {
-        recipeList.innerHTML = '<li>No recipes found for the given ingredients.</li>';
+        recipeList.innerHTML = '<li>No recipes found.</li>';
         return;
     }
 
     recipes.forEach(recipe => {
         const li = document.createElement('li');
-        li.classList.add('recipe-item');
         li.innerHTML = `
             <h3>${recipe.title}</h3>
-            <p><strong>Ingredients:</strong> ${recipe.ingredients.join(', ')}</p>
-            <button class="save" onclick="saveRecipe(${recipe.id})">Save</button>
+            <button onclick='saveRecipe(${JSON.stringify(recipe)})'>Save</button>
         `;
         recipeList.appendChild(li);
     });
 }
 
-// Save a recipe (optional)
-function saveRecipe(recipeId) {
-    const savedRecipes = JSON.parse(localStorage.getItem('savedRecipes')) || [];
-    if (!savedRecipes.includes(recipeId)) {
-        savedRecipes.push(recipeId);
+function saveRecipe(recipe) {
+    let savedRecipes = JSON.parse(localStorage.getItem('savedRecipes')) || [];
+    if (!savedRecipes.some(r => r.id === recipe.id)) {
+        savedRecipes.push(recipe);
         localStorage.setItem('savedRecipes', JSON.stringify(savedRecipes));
         alert('Recipe saved!');
+        loadSavedRecipes();
     } else {
         alert('Recipe already saved.');
     }
 }
 
-// Initialize the app
+function loadSavedRecipes() {
+    const savedRecipes = JSON.parse(localStorage.getItem('savedRecipes')) || [];
+    const savedRecipesList = document.getElementById('savedRecipesList');
+    savedRecipesList.innerHTML = '';
+
+    if (savedRecipes.length === 0) {
+        savedRecipesList.innerHTML = '<li>No saved recipes.</li>';
+        return;
+    }
+
+    savedRecipes.forEach(recipe => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <h3>${recipe.title}</h3>
+            <button onclick='removeRecipe(${recipe.id})'>Remove</button>
+        `;
+        savedRecipesList.appendChild(li);
+    });
+}
+
+function removeRecipe(recipeId) {
+    let savedRecipes = JSON.parse(localStorage.getItem('savedRecipes')) || [];
+    savedRecipes = savedRecipes.filter(recipe => recipe.id !== recipeId);
+    localStorage.setItem('savedRecipes', JSON.stringify(savedRecipes));
+    loadSavedRecipes();
+}
+
+function logout() {
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('currentUser');
+    showSignIn();
+}
+
 if (isLoggedIn()) {
     showDashboard();
 } else {
