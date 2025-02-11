@@ -101,19 +101,44 @@ function showDashboard() {
     });
 }
 
-// Fetch recipes from Spoonacular API
+// Fetch r3cipe function 
 function fetchRecipes(ingredients) {
-    const apiKey = '*****************************'; // Replace with your actual API key
-    const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&number=5&apiKey=${apiKey}`;
+    const userAgent = 'RecipeFinderApp - Version 1.0 - www.yourappwebsite.com'; // Replace with your app details
+    const url = `https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=ingredients&tag_contains_0=contains&tag_0=${ingredients}&json=true`;
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            displayRecipes(data);
-        })
-        .catch(error => {
-            alert('Error fetching recipes');
-        });
+    fetch(url, {
+        headers: {
+            'User-Agent': userAgent
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        displayRecipes(data.products);
+    })
+    .catch(error => {
+        alert('Error fetching recipes');
+    });
+}
+
+function displayRecipes(products) {
+    const recipeList = document.getElementById('recipeList');
+    recipeList.innerHTML = '';
+
+    if (products.length === 0) {
+        recipeList.innerHTML = '<li>No recipes found for the given ingredients.</li>';
+        return;
+    }
+
+    products.forEach(product => {
+        const li = document.createElement('li');
+        li.classList.add('recipe-item');
+        li.innerHTML = `
+            <h3>${product.product_name}</h3>
+            <p><strong>Ingredients:</strong> ${product.ingredients_text}</p>
+            <button class="save" onclick="saveRecipe(${product.code})">Save</button>
+        `;
+        recipeList.appendChild(li);
+    });
 }
 
 // Display the fetched recipes
