@@ -1,9 +1,13 @@
 /* Basic Styles for Recipe Finder */
-body {
+html, body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    height: 100%;
     background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 h1, h2 {
@@ -12,13 +16,16 @@ h1, h2 {
 }
 
 #content {
-    width: 80%;
-    margin: auto;
+    width: 90%;
     max-width: 600px;
     padding: 20px;
     background: white;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 form {
@@ -33,6 +40,7 @@ input[type="text"], input[type="email"], input[type="password"] {
     border-radius: 5px;
     border: 1px solid #ccc;
     font-size: 16px;
+    width: 100%;
 }
 
 button {
@@ -44,6 +52,7 @@ button {
     cursor: pointer;
     font-size: 16px;
     transition: background 0.3s;
+    width: 100%;
 }
 
 button:hover {
