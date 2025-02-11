@@ -105,7 +105,7 @@ function showDashboard() {
 }
 
 function fetchRecipes(ingredients) {
-    const userAgent = 'RecipeFinderApp - Version 1.0 - www.yourappwebsite.com'; // Replace with your app details
+    const userAgent = 'RecipeFinderApp - Version 1.0 - https://drkimogad.github.io/RecipeFinderApp; // Replace with your app details
     const url = `https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=ingredients&tag_contains_0=contains&tag_0=${ingredients}&json=true`;
     fetch(url)
     .then(response => response.json())
