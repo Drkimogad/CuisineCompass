@@ -1,188 +1,137 @@
-let currentUser = null;
-
-// Helper functions for login state
-function isLoggedIn() {
-    return localStorage.getItem('loggedIn') === 'true';
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-function getLoggedInUser() {
-    return JSON.parse(localStorage.getItem('currentUser'));
+#content {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
 }
 
-// Render dynamic content
-function render(content) {
-    document.getElementById('content').innerHTML = content;
+h1 {
+    color: #333;
+    margin-bottom: 1.5rem;
 }
 
-function showSignIn() {
-    render(`
-        <h1>Sign In</h1>
-        <form id="signInForm">
-            <label for="email">Email:</label>
-            <input type="email" id="email" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" required>
-            <button type="submit">Sign In</button>
-        </form>
-        <p>Don't have an account? <a href="#" onclick="showSignUp()">Sign Up</a></p>
-    `);
-    
-    document.getElementById('signInForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-        const user = users.find(user => user.email === email && user.password === password);
-        
-        if (user) {
-            localStorage.setItem('loggedIn', 'true');
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            showDashboard();
-        } else {
-            alert('Invalid credentials');
-        }
-    });
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-function showSignUp() {
-    render(`
-        <h1>Sign Up</h1>
-        <form id="signUpForm">
-            <label for="newEmail">Email:</label>
-            <input type="email" id="newEmail" required>
-            <label for="newPassword">Password:</label>
-            <input type="password" id="newPassword" required>
-            <button type="submit">Sign Up</button>
-        </form>
-        <p>Already have an account? <a href="#" onclick="showSignIn()">Sign In</a></p>
-    `);
-    
-    document.getElementById('signUpForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const newEmail = document.getElementById('newEmail').value;
-        const newPassword = document.getElementById('newPassword').value;
-        const users = JSON.parse(localStorage.getItem('users')) || [];
-
-        if (users.some(user => user.email === newEmail)) {
-            alert('Email already exists');
-        } else {
-            users.push({ email: newEmail, password: newPassword });
-            localStorage.setItem('users', JSON.stringify(users));
-            localStorage.setItem('currentUser', JSON.stringify({ email: newEmail }));
-            showSignIn();
-        }
-    });
+label {
+    font-weight: bold;
+    color: #555;
+    text-align: left;
 }
 
-function showDashboard() {
-    if (!isLoggedIn()) {
-        showSignIn();
-        return;
+input {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+button {
+    padding: 0.75rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+p {
+    margin-top: 1rem;
+    color: #666;
+}
+
+/* Dashboard styles */
+#recipeSearchForm {
+    margin-bottom: 2rem;
+}
+
+#recipeList, #savedRecipesList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#recipeList li, #savedRecipesList li {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#recipeList h3, #savedRecipesList h3 {
+    margin: 0;
+    color: #333;
+}
+
+#recipeList button, #savedRecipesList button {
+    background-color: #28a745;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+#recipeList button:hover, #savedRecipesList button:hover {
+    background-color: #218838;
+}
+
+/* Logout button */
+button[onclick="logout()"] {
+    background-color: #dc3545;
+    margin-bottom: 1rem;
+}
+
+button[onclick="logout()"]:hover {
+    background-color: #c82333;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    #content {
+        padding: 1rem;
     }
 
-    currentUser = getLoggedInUser();
-    render(`
-        <h1>Recipe Finder</h1>
-        <button onclick="logout()">Sign Out</button>
-        <form id="recipeSearchForm">
-            <label for="ingredients">Enter ingredients:</label>
-            <input type="text" id="ingredients" required>
-            <button type="submit">Search</button>
-        </form>
-        <h2>Recipes</h2>
-        <ul id="recipeList"></ul>
-        <h2>Saved Recipes</h2>
-        <ul id="savedRecipesList"></ul>
-    `);
-
-    document.getElementById('recipeSearchForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const ingredients = document.getElementById('ingredients').value;
-        fetchRecipes(ingredients);
-    });
-
-    loadSavedRecipes();
-}
-
-function fetchRecipes(ingredients) {
-    const userAgent = 'RecipeFinderApp - Version 1.0 - https://drkimogad.github.io/RecipeFinderApp; // Replace with your app details
-    const url = `https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=ingredients&tag_contains_0=contains&tag_0=${ingredients}&json=true`;
-    fetch(url)
-    .then(response => response.json())
-    .then(data => {
-        displayRecipes(data);
-    })
-    .catch(() => {
-        alert('Error fetching recipes');
-    });
-}
-
-function displayRecipes(recipes) {
-    const recipeList = document.getElementById('recipeList');
-    recipeList.innerHTML = '';
-
-    if (recipes.length === 0) {
-        recipeList.innerHTML = '<li>No recipes found.</li>';
-        return;
+    h1 {
+        font-size: 1.5rem;
     }
 
-    recipes.forEach(recipe => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-            <h3>${recipe.title}</h3>
-            <button onclick='saveRecipe(${JSON.stringify(recipe)})'>Save</button>
-        `;
-        recipeList.appendChild(li);
-    });
-}
-
-function saveRecipe(recipe) {
-    let savedRecipes = JSON.parse(localStorage.getItem('savedRecipes')) || [];
-    if (!savedRecipes.some(r => r.id === recipe.id)) {
-        savedRecipes.push(recipe);
-        localStorage.setItem('savedRecipes', JSON.stringify(savedRecipes));
-        alert('Recipe saved!');
-        loadSavedRecipes();
-    } else {
-        alert('Recipe already saved.');
+    input, button {
+        font-size: 0.875rem;
     }
-}
-
-function loadSavedRecipes() {
-    const savedRecipes = JSON.parse(localStorage.getItem('savedRecipes')) || [];
-    const savedRecipesList = document.getElementById('savedRecipesList');
-    savedRecipesList.innerHTML = '';
-
-    if (savedRecipes.length === 0) {
-        savedRecipesList.innerHTML = '<li>No saved recipes.</li>';
-        return;
     }
-
-    savedRecipes.forEach(recipe => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-            <h3>${recipe.title}</h3>
-            <button onclick='removeRecipe(${recipe.id})'>Remove</button>
-        `;
-        savedRecipesList.appendChild(li);
-    });
-}
-
-function removeRecipe(recipeId) {
-    let savedRecipes = JSON.parse(localStorage.getItem('savedRecipes')) || [];
-    savedRecipes = savedRecipes.filter(recipe => recipe.id !== recipeId);
-    localStorage.setItem('savedRecipes', JSON.stringify(savedRecipes));
-    loadSavedRecipes();
-}
-
-function logout() {
-    localStorage.removeItem('loggedIn');
-    localStorage.removeItem('currentUser');
-    showSignIn();
-}
-
-if (isLoggedIn()) {
-    showDashboard();
-} else {
-    showSignIn();
-}
