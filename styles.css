@@ -23,14 +23,20 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px;
+    max-width: 800px; /* Adjusted for better readability */
     text-align: center;
     margin: 1rem; /* Add margin to prevent the container from touching the edges */
+    overflow-y: auto; /* Enable scrolling for better usability */
 }
 
 h1 {
     color: #333;
     margin-bottom: 1.5rem;
+}
+
+h2 {
+    color: #555;
+    margin-bottom: 1rem;
 }
 
 /* Form Styling */
@@ -96,13 +102,13 @@ p {
     margin-bottom: 2rem;
 }
 
-#recipeList, #savedRecipesList {
+#recipeList, #savedRecipesList, #groceryList {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-#recipeList li, #savedRecipesList li {
+#recipeList li, #savedRecipesList li, #groceryList li {
     background-color: #f9f9f9;
     padding: 1rem;
     border: 1px solid #ddd;
@@ -114,7 +120,7 @@ p {
     flex-wrap: wrap;
 }
 
-#recipeList h3, #savedRecipesList h3 {
+#recipeList h3, #savedRecipesList h3, #groceryList h3 {
     margin: 0;
     color: #333;
     font-size: 1.1rem;
@@ -122,14 +128,14 @@ p {
 }
 
 /* Buttons for recipes */
-#recipeList button, #savedRecipesList button {
+#recipeList button, #savedRecipesList button, #groceryList button {
     background-color: #28a745;
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
     width: auto;
 }
 
-#recipeList button:hover, #savedRecipesList button:hover {
+#recipeList button:hover, #savedRecipesList button:hover, #groceryList button:hover {
     background-color: #218838;
 }
 
@@ -179,6 +185,18 @@ body.dark-mode a {
 
 body.dark-mode a:hover {
     color: #007bff;
+}
+
+/* Footer Styles */
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    background-color: #333;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
 }
 
 /* Responsive Design */
