@@ -32,13 +32,12 @@ body {
 
 .watermark {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 20px; /* Adjust top position */
+    right: 20px; /* Adjust right position */
     font-size: 2rem;
-    color: rgba(0, 0, 0, 0.1); /* Light color for watermark effect */
+    color: rgba(1, 1, 1, 1); /* Adjust opacity */
     pointer-events: none; /* Ensure it doesn't interfere with other elements */
 }
-
 h1 {
     color: #333;
     margin-bottom: 1.5rem;
