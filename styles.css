@@ -18,7 +18,6 @@ body {
     min-height: 100vh;
 }
 
-
 #content {
     background-color: #fff;
     padding: 2rem;
@@ -82,6 +81,14 @@ button {
 
 button:hover {
     background-color: #0056b3;
+}
+
+.print-button {
+    background-color: #28a745; /* Green color for Print button */
+}
+
+.print-button:hover {
+    background-color: #218838; /* Darker green on hover */
 }
 
 a {
@@ -216,3 +223,4 @@ footer {
         font-size: 0.875rem;
     }
 }
+
