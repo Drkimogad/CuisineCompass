@@ -105,6 +105,8 @@ function showDashboard() {
         <ul id="savedRecipes"></ul>
         <h2>Grocery List</h2>
         <ul id="groceryList"></ul>
+        <button onclick="saveGroceryList()">Save Grocery List</button>
+        <button onclick="printGroceryList()">Print Grocery List</button>
     `;
 
     document.getElementById('recipeSearchForm').addEventListener('submit', function(event) {
@@ -156,21 +158,22 @@ function displayRecipes(products) {
 
     products.forEach(product => {
         const li = document.createElement('li');
+        const ingredients = product.ingredients_text || "No ingredients listed";
         li.innerHTML = `
-            <h3>${product.product_name || "Unknown Recipe"}</h3>
-            <p><strong>Ingredients:</strong> ${product.ingredients_text || "No ingredients listed"}</p>
-            <button onclick="saveRecipe('${product.product_name}')">Save</button>
-            <button onclick="addToGroceryList('${product.ingredients_text}')">Add to Grocery List</button>
+            <h3><a href="${product.url}" target="_blank">${product.product_name || "Unknown Recipe"}</a></h3>
+            <p><strong>Ingredients:</strong> ${ingredients.length > 100 ? ingredients.substring(0, 100) + '... <a href="' + product.url + '" target="_blank">read more</a>' : ingredients}</p>
+            <button onclick="saveRecipe('${product.product_name}', '${product.url}')">Save</button>
+            <button onclick="addToGroceryList('${ingredients}')">Add to Grocery List</button>
         `;
         recipeList.appendChild(li);
     });
 }
 
 // Save recipe
-function saveRecipe(recipeName) {
+function saveRecipe(recipeName, recipeUrl) {
     const savedRecipes = JSON.parse(localStorage.getItem('savedRecipes')) || [];
-    if (!savedRecipes.includes(recipeName)) {
-        savedRecipes.push(recipeName);
+    if (!savedRecipes.some(recipe => recipe.name === recipeName)) {
+        savedRecipes.push({ name: recipeName, url: recipeUrl });
         localStorage.setItem('savedRecipes', JSON.stringify(savedRecipes));
         loadSavedRecipes();
         alert('Recipe saved!');
@@ -187,7 +190,7 @@ function loadSavedRecipes() {
 
     savedRecipes.forEach(recipe => {
         const li = document.createElement('li');
-        li.innerHTML = `${recipe} <button onclick="removeSavedRecipe('${recipe}')">Remove</button>`;
+        li.innerHTML = `<a href="${recipe.url}" target="_blank">${recipe.name}</a> <button onclick="removeSavedRecipe('${recipe.name}')">Remove</button>`;
         savedList.appendChild(li);
     });
 }
@@ -195,7 +198,7 @@ function loadSavedRecipes() {
 // Remove saved recipe
 function removeSavedRecipe(recipeName) {
     let savedRecipes = JSON.parse(localStorage.getItem('savedRecipes')) || [];
-    savedRecipes = savedRecipes.filter(recipe => recipe !== recipeName);
+    savedRecipes = savedRecipes.filter(recipe => recipe.name !== recipeName);
     localStorage.setItem('savedRecipes', JSON.stringify(savedRecipes));
     loadSavedRecipes();
 }
@@ -206,6 +209,25 @@ function addToGroceryList(ingredients) {
     const li = document.createElement('li');
     li.textContent = ingredients;
     groceryList.appendChild(li);
+}
+
+// Save grocery list
+function saveGroceryList() {
+    const groceryList = document.getElementById('groceryList').innerText;
+    const blob = new Blob([groceryList], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'grocery-list.txt';
+    a.click();
+}
+
+// Print grocery list
+function printGroceryList() {
+    const groceryList = document.getElementById('groceryList').innerText;
+    const newWindow = window.open('', '_blank');
+    newWindow.document.write(`<pre>${groceryList}</pre>`);
+    newWindow.print();
+    newWindow.close();
 }
 
 // Toggle dark mode
