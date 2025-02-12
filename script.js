@@ -94,8 +94,6 @@ function showDashboard() {
             <h1>Recipe Finder</h1>
         </header>
         <h2>Welcome, ${currentUser.email}!</h2>
-        <button onclick="logout()">Logout</button>
-        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
         <form id="recipeSearchForm">
             <label for="ingredients">Enter ingredients:</label>
             <input type="text" id="ingredients" required>
@@ -115,6 +113,7 @@ function showDashboard() {
         <ul id="groceryList"></ul>
         <button onclick="saveGroceryList()">Save Grocery List</button>
         <button onclick="printGroceryList()">Print Grocery List</button>
+        <button id="logoutButton" onclick="logout()">Logout</button>
     `;
 
     document.getElementById('recipeSearchForm').addEventListener('submit', function(event) {
