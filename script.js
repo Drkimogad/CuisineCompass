@@ -13,6 +13,7 @@ function getLoggedInUser() {
 function showSignIn() {
     const content = document.getElementById('content');
     content.innerHTML = `
+        <div class="watermark">CuisineCompass</div>
         <header>
             <h1>Recipe Finder</h1>
         </header>
@@ -48,6 +49,7 @@ function showSignIn() {
 function showSignUp() {
     const content = document.getElementById('content');
     content.innerHTML = `
+        <div class="watermark">CuisineCompass</div>
         <header>
             <h1>Recipe Finder</h1>
         </header>
