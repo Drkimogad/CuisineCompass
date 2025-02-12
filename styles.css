@@ -33,11 +33,15 @@ body {
 .watermark {
     position: absolute;
     top: 20px; /* Adjust top position */
-    right: 20px; /* Adjust right position */
+    left: 0; /* Start from the left edge */
+    right: 0; /* End at the right edge */
+    width: 100%; /* Full width */
+    text-align: center; /* Center the text */
     font-size: 2rem;
-    color: rgba(1, 1, 1, 1); /* Adjust opacity */
+    color: rgba(0, 0, 0, 0.1); /* Adjust opacity */
     pointer-events: none; /* Ensure it doesn't interfere with other elements */
 }
+
 h1 {
     color: #333;
     margin-bottom: 1.5rem;
