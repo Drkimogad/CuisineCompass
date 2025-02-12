@@ -195,7 +195,7 @@ body.dark-mode p, body.dark-mode label {
 body.dark-mode input, body.dark-mode button {
     background-color: #555;
     color: #f4f4f9;
-    border: 1px solid #666;
+    border: 1px solid #ffb400;
 }
 
 body.dark-mode button:hover {
