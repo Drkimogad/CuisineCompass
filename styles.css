@@ -36,15 +36,12 @@ body {
     left: 0; /* Start from the left edge */
     right: 0; /* End at the right edge */
     width: 100%; /* Full width */
+    font-size: 90px;
+    color: rgba(1, 1, 1, 1); /* Adjust font color */
     text-align: center; /* Center the text */
     padding: 20px; /* Padding for the container */
     border: 2px solid #ffb400; /* Border color matching the padding color */
     pointer-events: none; /* Ensure it doesn't interfere with other elements */
-}
-
-.watermark {
-    font-size: 90px;
-    color: rgba(1, 1, 1, 1); /* Adjust font color */
 }
 
 h1 {
