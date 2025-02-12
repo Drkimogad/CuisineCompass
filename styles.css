@@ -44,7 +44,7 @@ h1 {
     margin-bottom: 1.5rem;
 }
 
-h2 {
+h3 {
     color: #555;
     margin-bottom: 1rem;
 }
@@ -92,9 +92,7 @@ button:hover {
     background-color: #0056b3;
 }
 
-.print-button {
-    background-color: #28a745; /* Green color for Print button */
-}
+
 
 .print-button:hover {
     background-color: #218838; /* Darker green on hover */
