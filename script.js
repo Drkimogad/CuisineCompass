@@ -94,6 +94,7 @@ function showDashboard() {
             <h1>Recipe Finder</h1>
         </header>
         <h2>Welcome, ${currentUser.email}!</h2>
+        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
         <form id="recipeSearchForm">
             <label for="ingredients">Enter ingredients:</label>
             <input type="text" id="ingredients" required>
@@ -112,7 +113,7 @@ function showDashboard() {
         <h2>Grocery List</h2>
         <ul id="groceryList"></ul>
         <button onclick="saveGroceryList()">Save Grocery List</button>
-        <button onclick="printGroceryList()">Print Grocery List</button>
+        <button class="print-button" onclick="printGroceryList()">Print Grocery List</button>
         <button id="logoutButton" onclick="logout()">Logout</button>
     `;
 
