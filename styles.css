@@ -38,7 +38,7 @@ body {
     width: 100%; /* Full width */
     text-align: center; /* Center the text */
     padding: 20px; /* Padding for the container */
-    border: 2px solid rgba(0, 0, 0, 0.1); /* Border color matching the padding color */
+    border: 2px solid #ffb400; /* Border color matching the padding color */
     pointer-events: none; /* Ensure it doesn't interfere with other elements */
 }
 
