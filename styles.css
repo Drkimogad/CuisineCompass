@@ -144,7 +144,8 @@ p {
     background-color: #dc3545;
     width: 100%;
     max-width: 300px;
-    margin-top: 1rem;
+    margin-top: 2rem; /* Increase margin for better spacing */
+    margin-bottom: 2rem; /* Ensure space between button and footer */
 }
 
 #logoutButton:hover {
