@@ -13,7 +13,10 @@ function getLoggedInUser() {
 function showSignIn() {
     const content = document.getElementById('content');
     content.innerHTML = `
-        <h1>Sign In</h1>
+        <header>
+            <h1>Recipe Finder</h1>
+        </header>
+        <h2>Sign In</h2>
         <form id="signInForm">
             <label for="email">Email:</label>
             <input type="email" id="email" required>
@@ -45,7 +48,10 @@ function showSignIn() {
 function showSignUp() {
     const content = document.getElementById('content');
     content.innerHTML = `
-        <h1>Sign Up</h1>
+        <header>
+            <h1>Recipe Finder</h1>
+        </header>
+        <h2>Sign Up</h2>
         <form id="signUpForm">
             <label for="newEmail">Email:</label>
             <input type="email" id="newEmail" required>
@@ -84,8 +90,10 @@ function showDashboard() {
     currentUser = getLoggedInUser();
     const content = document.getElementById('content');
     content.innerHTML = `
-        <h1>Recipe Finder</h1>
-        <p>Welcome, ${currentUser.email}!</p>
+        <header>
+            <h1>Recipe Finder</h1>
+        </header>
+        <h2>Welcome, ${currentUser.email}!</h2>
         <button onclick="logout()">Logout</button>
         <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
         <form id="recipeSearchForm">
