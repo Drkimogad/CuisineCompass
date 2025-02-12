@@ -8,14 +8,16 @@
 /* General styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background: url('path/to/your/logo.png') no-repeat center center fixed;
+    background-size: cover;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+    min-height: 100vh;
 }
+
 
 #content {
     background-color: #fff;
