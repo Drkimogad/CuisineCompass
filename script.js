@@ -15,9 +15,9 @@ function showSignIn() {
     content.innerHTML = `
         <div class="watermark">CuisineCompass</div>
         <header>
-            <h1>Recipe Finder</h1>
+            <h1>Cuisine Compass</h1>
         </header>
-        <h2>Sign In</h2>
+        <h3>Sign in to navigate through your flavour finder</h3>
         <form id="signInForm">
             <label for="email">Email:</label>
             <input type="email" id="email" required>
@@ -53,7 +53,7 @@ function showSignUp() {
         <header>
             <h1>Recipe Finder</h1>
         </header>
-        <h2>Sign Up</h2>
+        <h3>Sign up to navigate through your flavour finder</h3>
         <form id="signUpForm">
             <label for="newEmail">Email:</label>
             <input type="email" id="newEmail" required>
@@ -93,7 +93,7 @@ function showDashboard() {
     const content = document.getElementById('content');
     content.innerHTML = `
         <header>
-            <h1>Recipe Finder</h1>
+            <h1>Cuisine Compass</h1>
         </header>
         <h2>Welcome, ${currentUser.email}!</h2>
         <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
@@ -115,7 +115,6 @@ function showDashboard() {
         <h2>Grocery List</h2>
         <ul id="groceryList"></ul>
         <button onclick="saveGroceryList()">Save Grocery List</button>
-        <button class="print-button" onclick="printGroceryList()">Print Grocery List</button>
         <button id="logoutButton" onclick="logout()">Logout</button>
     `;
 
@@ -229,15 +228,6 @@ function saveGroceryList() {
     a.href = URL.createObjectURL(blob);
     a.download = 'grocery-list.txt';
     a.click();
-}
-
-// Print grocery list
-function printGroceryList() {
-    const groceryList = document.getElementById('groceryList').innerText;
-    const newWindow = window.open('', '_blank');
-    newWindow.document.write(`<pre>${groceryList}</pre>`);
-    newWindow.print();
-    newWindow.close();
 }
 
 // Toggle dark mode
