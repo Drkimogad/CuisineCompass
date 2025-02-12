@@ -37,7 +37,7 @@ body {
     right: 0; /* End at the right edge */
     width: 100%; /* Full width */
     text-align: center; /* Center the text */
-    font-size: 2rem;
+    font-size: 28px;
     color: rgba(0, 0, 0, 0.1); /* Adjust opacity */
     pointer-events: none; /* Ensure it doesn't interfere with other elements */
 }
