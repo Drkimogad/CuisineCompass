@@ -145,6 +145,42 @@ p {
     background-color: #c82333;
 }
 
+/* Dark Mode */
+body.dark-mode {
+    background-color: #333;
+    color: #f4f4f9;
+}
+
+body.dark-mode #content {
+    background-color: #444;
+}
+
+body.dark-mode h1, body.dark-mode h3 {
+    color: #f4f4f9;
+}
+
+body.dark-mode p, body.dark-mode label {
+    color: #ccc;
+}
+
+body.dark-mode input, body.dark-mode button {
+    background-color: #555;
+    color: #f4f4f9;
+    border: 1px solid #666;
+}
+
+body.dark-mode button:hover {
+    background-color: #666;
+}
+
+body.dark-mode a {
+    color: #4a90e2;
+}
+
+body.dark-mode a:hover {
+    color: #007bff;
+}
+
 /* Responsive Design */
 @media (max-width: 480px) {
     #content {
