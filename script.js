@@ -222,7 +222,7 @@ function removeSavedRecipe(recipeName) {
 function addToGroceryList(ingredients) {
     const groceryList = document.getElementById('groceryList');
     const li = document.createElement('li');
-    li.textContent = ingredients;
+    li.innerHTML = `${ingredients} <button onclick="removeFromGroceryList(this, '${ingredients}')">Remove</button>`;
     groceryList.appendChild(li);
 
     // Save to local storage
@@ -235,6 +235,17 @@ function addToGroceryList(ingredients) {
     }
 }
 
+// Remove from grocery list
+function removeFromGroceryList(button, ingredients) {
+    const li = button.parentElement;
+    li.remove();
+
+    // Remove from local storage
+    const savedList = JSON.parse(localStorage.getItem('groceryList')) || [];
+    const updatedList = savedList.filter(item => item !== ingredients);
+    localStorage.setItem('groceryList', JSON.stringify(updatedList));
+}
+
 // Load grocery list on page load
 function loadGroceryList() {
     const savedList = JSON.parse(localStorage.getItem('groceryList')) || [];
@@ -242,7 +253,7 @@ function loadGroceryList() {
     groceryList.innerHTML = ''; // Clear existing list to avoid duplication
     savedList.forEach(ingredients => {
         const li = document.createElement('li');
-        li.textContent = ingredients;
+        li.innerHTML = `${ingredients} <button onclick="removeFromGroceryList(this, '${ingredients}')">Remove</button>`;
         groceryList.appendChild(li);
     });
 }
@@ -278,6 +289,3 @@ if (isLoggedIn()) {
 } else {
     showSignIn();
 }
-
-// Highlighted updates
-// - Added `loadGroceryList` call in `window.onload` function
