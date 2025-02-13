@@ -117,6 +117,13 @@ function showDashboard() {
         <button onclick="saveGroceryList()">Save Grocery List</button>
         <button id="logoutButton" onclick="logout()">Logout</button>
     `;
+    // Style the header
+    const header = document.getElementById('dashboardHeader');
+    header.style.padding = '20px';
+    header.style.border = '2px solid #ccc';
+    header.style.color = '#333';
+    header.style.fontSize = '24px';
+    }
 
     document.getElementById('recipeSearchForm').addEventListener('submit', function(event) {
         event.preventDefault();
