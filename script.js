@@ -127,9 +127,13 @@ function showDashboard() {
         <h2>Grocery List</h2>
         <ul id="groceryList"></ul>
         <button onclick="saveGroceryList()">Save Grocery List</button>
-        <button id="logoutButton" onclick="logout()">Logout</button>
+        <button id="logoutButton">Logout</button>
     `;
 
+    // Add event listener for the logout button
+    document.getElementById('logoutButton').addEventListener('click', logout);
+
+    // Add event listener for the recipe search form
     document.getElementById('recipeSearchForm').addEventListener('submit', function(event) {
         event.preventDefault();
         const ingredients = document.getElementById('ingredients').value.trim();
