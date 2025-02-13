@@ -159,6 +159,20 @@ p {
 #recipeList button:hover, #savedRecipesList button:hover, #groceryList button:hover {
     background-color: #218838;
 }
+/* Add this section for the remove button */
+#groceryList button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+#groceryList button:hover {
+    background-color: darkred;
+}
+
 
 /* Logout Button */
 #logoutButton {
