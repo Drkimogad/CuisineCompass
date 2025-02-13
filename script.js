@@ -15,7 +15,7 @@ function showSignIn() {
     content.innerHTML = `
         <div class="watermark">CuisineCompass</div>
         <header>
-            <h1>Embark on a delicious journey</h1>
+            <h1>Embark on a delicious journey – sign in to explore</h1>
         </header>
         <h3>Sign in and let your taste buds lead the way!</h3>
         <form id="signInForm">
@@ -117,6 +117,7 @@ function showDashboard() {
         <button onclick="saveGroceryList()">Save Grocery List</button>
         <button id="logoutButton" onclick="logout()">Logout</button>
     `;
+
     document.getElementById('recipeSearchForm').addEventListener('submit', function(event) {
         event.preventDefault();
         const ingredients = document.getElementById('ingredients').value;
@@ -137,11 +138,12 @@ function logout() {
 
 // Fetch recipes
 function fetchRecipes(ingredients) {
-    if (!navigator.onLine) {
-        alert("You are offline. This recipe requires an internet connection.");
+    if (!navigator.online) {
+        alert("You are offline. This recipe requires an internet connection. ");
         return;
     }
-    const userAgent = 'CuisineCompass - Version 1.0';
+       
+    const userAgent = 'RecipeFinderApp - Version 1.0';
     const url = `https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=ingredients&tag_contains_0=contains&tag_0=${ingredients}&json=true`;
 
     document.getElementById('loading').style.display = 'block';
@@ -244,58 +246,3 @@ if (isLoggedIn()) {
 } else {
     showSignIn();
 }
-
-//JavaScript Snippet to Check for Updates
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('//JavaScript Snippet to Check for Updates
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('https://drkimogad.github.io/CuisineCompass/service-worker.js')
-            .then((registration) => {
-                console.log('Service Worker registered with scope:', registration.scope);
-                // Check for service worker updates
-                registration.update();
-
-                // Listen for when a new service worker is available and update it
-                registration.addEventListener('updatefound', () => {
-                    const installingWorker = registration.installing;
-                    installingWorker.addEventListener('statechange', () => {
-                        if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                            // New version available, notify user and skip waiting
-                            if (confirm('A new version of the app is available. Would you like to update?')) {
-                                installingWorker.postMessage({ action: 'skipWaiting' });
-                            }
-                        }
-                    });
-                });
-            })
-            .catch((error) => {
-                console.error('Error registering service worker:', error);
-            });
-    });
-}')
-            .then((registration) => {
-                console.log('Service Worker registered with scope:', registration.scope);
-                // Check for service worker updates
-                registration.update();
-
-                // Listen for when a new service worker is available and update it
-                registration.addEventListener('updatefound', () => {
-                    const installingWorker = registration.installing;
-                    installingWorker.addEventListener('statechange', () => {
-                        if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                            // New version available, notify user and skip waiting
-                            if (confirm('A new version of the app is available. Would you like to update?')) {
-                                installingWorker.postMessage({ action: 'skipWaiting' });
-                            }
-                        }
-                    });
-                });
-            })
-            .catch((error) => {
-                console.error('Error registering service worker:', error);
-            });
-    });
-}
-
