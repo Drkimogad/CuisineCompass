@@ -249,6 +249,7 @@ function loadGroceryList() {
 
 // Call loadGroceryList on page load
 window.onload = function() {
+    loadGroceryList(); // Load grocery list on page load
     if (isLoggedIn()) {
         showDashboard();
     } else {
@@ -279,6 +280,4 @@ if (isLoggedIn()) {
 }
 
 // Highlighted updates
-// - Added `loadGroceryList` call in `showDashboard` function
-// - Updated `addToGroceryList` to prevent duplicate ingredients
-// - Updated `loadGroceryList` to clear existing list before appending new items
+// - Added `loadGroceryList` call in `window.onload` function
