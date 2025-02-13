@@ -1,0 +1,41 @@
+{
+
+    "name": "CuisineCompass",
+
+    "short_name": "CuisineCompass",
+
+    "description": "CuisineCompass is your ultimate flavor discovery app, designed to guide food lovers through a world of tastes, cuisines, and dining experiences. Whether you're craving a new culinary adventure, searching for the perfect recipe, or exploring hidden food gems near you, CuisineCompass helps you navigate your way to the best flavors. With personalized recommendations, interactive food maps, and curated taste journeys, your next great meal is just a tap away. Embark on a delicious journey and let your taste buds lead the way! 🍽️🌍✨",
+
+    "start_url": "https://drkimogad.github.io/CuisineCompass/index.html",
+
+    "display": "standalone",
+
+    "background_color": "#ffffff",
+
+    "theme_color": "#4CAF50",
+
+    "icons": [
+
+        {
+
+            "src": "https://drkimogad.github.io/CuisineCompass/icons/icon-192x192.png",
+
+            "sizes": "192x192",
+
+            "type": "image/png"
+
+        },
+
+        {
+
+            "src": "https://drkimogad.github.io/CuisineCompass/icons/icon-512x512.png",
+
+            "sizes": "512x512",
+
+            "type": "image/png"
+
+        }
+
+    ]
+
+}
