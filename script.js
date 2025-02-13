@@ -15,9 +15,9 @@ function showSignIn() {
     content.innerHTML = `
         <div class="watermark">CuisineCompass</div>
         <header>
-            <h1>Cuisine Compass</h1>
+            <h1>Embark on a delicious journey – sign in to explore</h1>
         </header>
-        <h3>Sign in to navigate through your flavour finder</h3>
+        <h3>Sign in and let your taste buds lead the way!</h3>
         <form id="signInForm">
             <label for="email">Email:</label>
             <input type="email" id="email" required>
@@ -51,9 +51,9 @@ function showSignUp() {
     content.innerHTML = `
         <div class="watermark">CuisineCompass</div>
         <header>
-            <h1>Recipe Finder</h1>
+            <h1>Join now to navigate the ultimate flavor journey</h1>
         </header>
-        <h3>Sign up to navigate through your flavour finder</h3>
+        <h3>Sign up to chart your course through a world of flavors!</h3>
         <form id="signUpForm">
             <label for="newEmail">Email:</label>
             <input type="email" id="newEmail" required>
