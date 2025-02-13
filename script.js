@@ -223,7 +223,33 @@ function addToGroceryList(ingredients) {
     const li = document.createElement('li');
     li.textContent = ingredients;
     groceryList.appendChild(li);
+
+    // Save to local storage
+    const savedList = JSON.parse(localStorage.getItem('groceryList')) || [];
+    savedList.push(ingredients);
+    localStorage.setItem('groceryList', JSON.stringify(savedList));
 }
+
+// Load grocery list on page load
+function loadGroceryList() {
+    const savedList = JSON.parse(localStorage.getItem('groceryList')) || [];
+    const groceryList = document.getElementById('groceryList');
+    savedList.forEach(ingredients => {
+        const li = document.createElement('li');
+        li.textContent = ingredients;
+        groceryList.appendChild(li);
+    });
+}
+
+// Call loadGroceryList on page load
+window.onload = function() {
+    loadGroceryList();
+    if (isLoggedIn()) {
+        showDashboard();
+    } else {
+        showSignIn();
+    }
+};
 
 // Save grocery list
 function saveGroceryList() {
