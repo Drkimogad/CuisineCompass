@@ -38,10 +38,11 @@ body {
     width: 100%; /* Full width */
     text-align: center; /* Center the text */
     font-size: 90px;
-    padding: 20px; /* Padding for the container */
+    padding: 18px; /* Padding for the container */
     border: 2px solid orange;
     color: rgba(1, 1, 1, 1); /* Adjust opacity */
     pointer-events: none; /* Ensure it doesn't interfere with other elements */
+    z-index: 10; /* Ensure watermark stays above other elements */
 }
 
 
@@ -233,4 +234,13 @@ footer {
     input, button {
         font-size: 0.875rem;
     }
+
+    #logoutButton {
+        margin-top: 2rem; /* Ensure enough space between save grocery list and logout button */
+    }
+}
+
+/* Additional space between save grocery list button and logout button */
+#savedRecipesList + #logoutButton {
+    margin-top: 2rem;
 }
