@@ -15,7 +15,7 @@ function showSignIn() {
     content.innerHTML = `
         <div class="watermark">CuisineCompass</div>
         <header>
-            <h1>Embark on a delicious journey – sign in to explore</h1>
+            <h1>Embark on a delicious journey</h1>
         </header>
         <h3>Sign in and let your taste buds lead the way!</h3>
         <form id="signInForm">
