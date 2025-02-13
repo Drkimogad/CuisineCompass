@@ -127,6 +127,7 @@ function showDashboard() {
     document.getElementById('filter').addEventListener('change', applySorting);
 
     loadSavedRecipes();
+    loadGroceryList(); // Load grocery list when showing dashboard
 }
 
 // Logout function
@@ -226,14 +227,19 @@ function addToGroceryList(ingredients) {
 
     // Save to local storage
     const savedList = JSON.parse(localStorage.getItem('groceryList')) || [];
-    savedList.push(ingredients);
-    localStorage.setItem('groceryList', JSON.stringify(savedList));
+    if (!savedList.includes(ingredients)) {
+        savedList.push(ingredients);
+        localStorage.setItem('groceryList', JSON.stringify(savedList));
+    } else {
+        alert('Ingredient already in grocery list');
+    }
 }
 
 // Load grocery list on page load
 function loadGroceryList() {
     const savedList = JSON.parse(localStorage.getItem('groceryList')) || [];
     const groceryList = document.getElementById('groceryList');
+    groceryList.innerHTML = ''; // Clear existing list to avoid duplication
     savedList.forEach(ingredients => {
         const li = document.createElement('li');
         li.textContent = ingredients;
@@ -243,7 +249,6 @@ function loadGroceryList() {
 
 // Call loadGroceryList on page load
 window.onload = function() {
-    loadGroceryList();
     if (isLoggedIn()) {
         showDashboard();
     } else {
@@ -272,3 +277,8 @@ if (isLoggedIn()) {
 } else {
     showSignIn();
 }
+
+// Highlighted updates
+// - Added `loadGroceryList` call in `showDashboard` function
+// - Updated `addToGroceryList` to prevent duplicate ingredients
+// - Updated `loadGroceryList` to clear existing list before appending new items
