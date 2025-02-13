@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CuisineCompass</title>
+    <link rel="manifest" href="https://drkimogad.github.io/CuisineCompass/manifest.json">
+    <link rel="icon" href="https://drkimogad.github.io/CuisineCompass/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,7 +14,18 @@
     <footer>
         <p>&copy; 2025 CuisineCompass. All rights reserved.</p>
     </footer>
-
+    <!-- Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('https://drkimogad.github.io/CuisineCompass/service-worker.js').then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                }).catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
