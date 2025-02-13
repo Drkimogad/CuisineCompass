@@ -150,6 +150,13 @@ function showDashboard() {
     loadGroceryList();
 }
 
+// Logout function
+function logout() {
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('currentUser');
+    showSignIn();
+}
+
 // Fetch recipes
 function fetchRecipes(ingredients) {
     if (!navigator.onLine) {
