@@ -9,6 +9,11 @@ function getLoggedInUser() {
     return JSON.parse(localStorage.getItem('currentUser'));
 }
 
+// Hash password using SHA-256
+function hashPassword(password) {
+    return CryptoJS.SHA256(password).toString();
+}
+
 // Show Sign-In Page
 function showSignIn() {
     const content = document.getElementById('content');
@@ -30,10 +35,16 @@ function showSignIn() {
 
     document.getElementById('signInForm').addEventListener('submit', function(event) {
         event.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+
+        if (!email || !password) {
+            alert('Please fill in all fields.');
+            return;
+        }
+
         const users = JSON.parse(localStorage.getItem('users')) || [];
-        const user = users.find(user => user.email === email && user.password === password);
+        const user = users.find(user => user.email === email && user.password === hashPassword(password));
 
         if (user) {
             localStorage.setItem('loggedIn', 'true');
@@ -66,14 +77,20 @@ function showSignUp() {
 
     document.getElementById('signUpForm').addEventListener('submit', function(event) {
         event.preventDefault();
-        const newEmail = document.getElementById('newEmail').value;
-        const newPassword = document.getElementById('newPassword').value;
+        const newEmail = document.getElementById('newEmail').value.trim();
+        const newPassword = document.getElementById('newPassword').value.trim();
+
+        if (!newEmail || !newPassword) {
+            alert('Please fill in all fields.');
+            return;
+        }
+
         const users = JSON.parse(localStorage.getItem('users')) || [];
 
         if (users.some(user => user.email === newEmail)) {
             alert('Email already exists');
         } else {
-            users.push({ email: newEmail, password: newPassword });
+            users.push({ email: newEmail, password: hashPassword(newPassword) });
             localStorage.setItem('users', JSON.stringify(users));
             localStorage.setItem('loggedIn', 'true');
             localStorage.setItem('currentUser', JSON.stringify({ email: newEmail }));
@@ -104,11 +121,6 @@ function showDashboard() {
         </form>
         <h2>Recipes</h2>
         <div id="loading" style="display:none;">Loading...</div>
-        <select id="filter">
-            <option value="">Sort by</option>
-            <option value="calories">Calories</option>
-            <option value="time">Cooking Time</option>
-        </select>
         <ul id="recipeList"></ul>
         <h2>Saved Recipes</h2>
         <ul id="savedRecipes"></ul>
@@ -120,21 +132,18 @@ function showDashboard() {
 
     document.getElementById('recipeSearchForm').addEventListener('submit', function(event) {
         event.preventDefault();
-        const ingredients = document.getElementById('ingredients').value;
+        const ingredients = document.getElementById('ingredients').value.trim();
+
+        if (!ingredients) {
+            alert('Please enter ingredients.');
+            return;
+        }
+
         fetchRecipes(ingredients);
     });
 
-    document.getElementById('filter').addEventListener('change', applySorting);
-
     loadSavedRecipes();
-    loadGroceryList(); // Load grocery list when showing dashboard
-}
-
-// Logout function
-function logout() {
-    localStorage.removeItem('loggedIn');
-    localStorage.removeItem('currentUser');
-    showSignIn();
+    loadGroceryList();
 }
 
 // Fetch recipes
@@ -150,14 +159,19 @@ function fetchRecipes(ingredients) {
     document.getElementById('loading').style.display = 'block';
 
     fetch(url, { headers: { 'User-Agent': userAgent } })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+            return response.json();
+        })
         .then(data => {
             document.getElementById('loading').style.display = 'none';
             displayRecipes(data.products);
         })
         .catch(() => {
             document.getElementById('loading').style.display = 'none';
-            alert('Error fetching recipes');
+            alert('Error fetching recipes. Please try again later.');
         });
 }
 
