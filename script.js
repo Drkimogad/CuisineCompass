@@ -137,7 +137,11 @@ function logout() {
 
 // Fetch recipes
 function fetchRecipes(ingredients) {
-    const userAgent = 'RecipeFinderApp - Version 1.0';
+    if (!navigator.onLine) {
+        alert("You are offline. This recipe requires an internet connection.");
+        return;
+    }
+    const userAgent = 'CuisineCompass - Version 1.0';
     const url = `https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=ingredients&tag_contains_0=contains&tag_0=${ingredients}&json=true`;
 
     document.getElementById('loading').style.display = 'block';
